@@ -1,0 +1,9 @@
+feature_id,layer_name,issue_type,issue_description,action_taken,confidence_score,reviewer_notes
+OSM_001,building_footprints,missing_attribute,building:use field is null,Inferred residential from surrounding context and satellite imagery cross-reference,0.75,Flag for human review if high-stakes classification
+OSM_002,building_footprints,overlapping_polygon,Footprint overlaps adjacent road centerline by 1.2m,Adjusted vertices to snap to road boundary; verified against aerial imagery,0.90,Likely digitization error from source OSM contributor
+OSM_003,road_network,topology_gap,0.3m sliver gap between two road segments at intersection,Snapped endpoint to nearest node using QGIS topology checker,0.95,Common artifact from OSM multi-contributor edits
+OSM_004,land_use,misclassification,Parcel labeled landuse=commercial; satellite imagery shows single-family residential,Reclassified to landuse=residential,0.85,Recommend field verification if area is transitional zone
+OSM_005,building_footprints,geometry_error,Self-intersecting polygon; fails geometry validity check,Rebuilt polygon using vertex editor; removed duplicate node,0.98,Invalid geometry prevents accurate area calculations
+OSM_006,road_network,missing_attribute,highway tag present but name field null for named street,Left null; insufficient context to infer name without ground truth,0.00,Requires local knowledge or street-level imagery to resolve
+OSM_007,building_footprints,missing_attribute,building field = yes (generic); type unspecified,Left as-is; insufficient context for reclassification,0.00,Low-confidence; escalate to domain expert
+OSM_008,land_use,overlapping_polygon,Residential parcel overlaps park boundary by 45 sq meters,Clipped park polygon to remove overlap; residential boundary treated as authoritative,0.80,Boundary dispute common in OSM at parcel edges
