@@ -60,7 +60,7 @@ project-01-critical-infrastructure/
 
 **Map Preview:**
 
-*[Map export will be added upon QGIS project completion]*
+![US Critical Infrastructure Power Transmission Map](maps/Project-01-Critical-Infrastructure.png)
 
 ---
 
