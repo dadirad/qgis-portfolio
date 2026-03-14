@@ -60,7 +60,7 @@ project-01-critical-infrastructure/
 
 **Map Preview:**
 
-![US Critical Infrastructure Power Transmission Map](maps/Project-01-Critical-Infrastructure.png)
+![US Critical Infrastructure Power Transmission Map](project-01-critical-infrastructure/maps/Project-01-Critical-Infrastructure.png)
 
 ---
 
