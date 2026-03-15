@@ -113,7 +113,7 @@ project-02-cybersecurity-incident-heatmap/
 
 **Map Preview:**
 
-![US Healthcare Data Breaches — Hacking/IT Incidents by State](project-02-cybersecurity-incident-heatmap/maps/Project 02 Cybersecurity Incident Heatmap.png)
+![US Healthcare Data Breaches — Hacking/IT Incidents by State](project-02-cybersecurity-incident-heatmap/maps/Project-02-Cybersecurity-Incident-Heatmap.png)
 
 ---
 
