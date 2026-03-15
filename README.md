@@ -33,22 +33,28 @@ This repository documents geospatial analysis projects built with QGIS, develope
 **Objective:** Map and analyze the physical distribution of critical infrastructure assets across CISA's 16 designated sectors, identifying geographic concentration and coverage gaps relevant to national security planning.
 
 **Data Sources:**
-- [CISA Critical Infrastructure Data](https://www.cisa.gov/topics/critical-infrastructure-security-and-resilience)
-- US Census Bureau TIGER/Line Shapefiles (state and county boundaries)
-- Homeland Infrastructure Foundation-Level Data (HIFLD) — public layer
+- [US Census Bureau TIGER/Line Shapefiles 2025](https://www.census.gov/cgi-bin/geo/shapefiles/index.php) — state boundaries base layer
+- [HIFLD Open Data — Electric Power Transmission Lines](https://hifld-geoplatform.hub.arcgis.com/) — Energy sector
+- [HIFLD Open Data — Hospitals 2020](https://hifld-geoplatform.hub.arcgis.com/) — Health & Public Health sector
+- [EIA Natural Gas Inter/Intrastate Pipelines](https://www.eia.gov/maps/layer_info-m.php) — Energy sector
 
 **Methodology:**
-1. Ingested US state boundary shapefiles as the base layer
-2. Loaded HIFLD public point data for infrastructure assets
-3. Categorized assets by CISA sector using field calculator
-4. Applied graduated symbology to visualize density by sector and region
-5. Exported print-ready map layout with legend, scale bar, and north arrow
+1. Ingested 2025 US Census TIGER state boundary shapefiles as the base layer (EPSG:4326)
+2. Loaded and styled three CISA sector infrastructure layers:
+   - Electric power transmission lines (Energy sector) — orange, 0.3mm stroke, 40% opacity
+   - Natural gas inter/intrastate pipelines (Energy sector) — yellow, 0.2mm stroke, 30% opacity
+   - HIFLD hospital locations (Health & Public Health sector) — red points, 0.8mm size, 70% opacity
+3. Ordered layers by geometry type (points above lines above polygons) for optimal readability
+4. Created print layout with title, legend, scale bar, and north arrow
+5. Exported at 300 DPI in PNG and PDF formats
 
 **Key Findings:**
-- Energy and transportation sectors show highest geographic concentration in the Southeast and Midwest corridors
-- Significant infrastructure density clusters align with major metropolitan areas, consistent with CISA threat modeling priorities
+- Electric power transmission and natural gas pipeline networks show highest density in the eastern US, particularly along the Gulf Coast and Mid-Atlantic corridors
+- Hospital distribution closely mirrors population density, with notable gaps in rural western states indicating potential healthcare access vulnerabilities
+- Energy infrastructure concentration in the Southeast aligns with CISA threat modeling priorities for grid resilience
+- Alaska shows meaningful infrastructure presence across all three sectors despite its geographic isolation
 
-**Tools Used:** QGIS 3.x, HIFLD Open Data, US Census shapefiles
+**Tools Used:** QGIS 3.x, HIFLD Open Data, EIA Pipeline Data, US Census TIGER/Line Shapefiles 2025
 
 **Files:**
 ```
@@ -60,7 +66,7 @@ project-01-critical-infrastructure/
 
 **Map Preview:**
 
-![US Critical Infrastructure Power Transmission Map](project-01-critical-infrastructure/maps/Project-01-Critical-Infrastructure.png)
+![US Critical Infrastructure — Electric Power Transmission, Natural Gas Pipelines, and Hospitals](project-01-critical-infrastructure/maps/Project-01-Critical-Infrastructure.png)
 
 ---
 
