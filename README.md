@@ -169,7 +169,7 @@ project-03-geospatial-data-qa/
 
 **Map Preview:**
 
-![Downtown Atlanta — OSM Geospatial Data QA Analysis](project-03-geospatial-data-qa/maps/project-03-geospatial-data-qa.png)
+![Downtown Atlanta — OSM Geospatial Data QA Analysis](project-03-geospatial-data-qa/maps/Project-03-Geospatial-Data-QA.png)
 
 ---
 
