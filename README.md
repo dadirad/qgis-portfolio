@@ -113,7 +113,7 @@ project-02-cybersecurity-incident-heatmap/
 
 **Map Preview:**
 
-![US Healthcare Data Breaches — Hacking/IT Incidents by State](project-02-cybersecurity-incident-heatmap/maps/Project-02-Cybersecurity-Incident-Heatmap.png)
+![US Healthcare Data Breaches — Hacking/IT Incidents by State](project-02-cybersecurity-incident-heatmap/maps/Project 02 Cybersecurity Incident Heatmap.png)
 
 ---
 
@@ -127,42 +127,49 @@ project-02-cybersecurity-incident-heatmap/
 **Background:** This project directly mirrors real-world AI data annotation workflows. Drawing on my experience as an AI Data Annotator at RWS and my work with CISA training content, this project applies those QA principles to geospatial feature data.
 
 **Data Sources:**
-- OpenStreetMap export via [Overpass Turbo](https://overpass-turbo.osm.ch/) — building footprints, road networks
-- USGS National Map public layers
+- OpenStreetMap export via [Overpass Turbo](https://overpass-turbo.eu/) — building footprints and road networks for downtown Atlanta, GA
+- Bounding box: 33.748, -84.395 to 33.758, -84.383 (downtown Atlanta core)
 
 **Methodology:**
-1. Exported a sample region from OpenStreetMap (approx. 5km x 5km urban area)
-2. Loaded feature layers into QGIS and performed geometry validity checks
-3. Identified and documented annotation issues:
-   - Missing attribute fields
-   - Overlapping polygons
-   - Topology errors (gaps, slivers)
-   - Misclassified feature types
-4. Applied corrections using QGIS editing tools and documented each change
-5. Produced a QA log (CSV) recording: feature ID, issue type, action taken, confidence score
+1. Exported downtown Atlanta OSM data using Overpass Turbo with building, highway, and landuse filters
+2. Loaded GeoJSON into QGIS as two separate geometry layers: Polygon (430 features) and LineString (1693 features)
+3. Ran geometry validity checks on both layers using QGIS Vector > Geometry Tools > Check Validity (GEOS 3.14.1)
+4. Performed systematic attribute completeness audit across key fields: building, name, landuse, building:use, building:material, building:levels
+5. Identified and categorized QA issues: missing attributes, generic labels, systematic nulls, and landuse gaps
+6. Documented all findings in structured QA log CSV with feature ID, issue type, action taken, and confidence score
+7. Styled layers and exported print-ready map layout at 300 DPI
 
 **QA Issue Categories Identified:**
 
-| Issue Type | Description | Action Taken |
-|------------|-------------|--------------|
-| Missing attributes | Feature present, label field null | Inferred from surrounding context; flagged low confidence |
-| Overlapping polygons | Building footprints overlap roads | Adjusted vertices; documented for human review |
-| Topology gaps | Slivers between adjacent parcels | Snapped to nearest vertex using topology checker |
-| Misclassification | Residential labeled as commercial | Corrected via satellite imagery cross-reference |
+| Issue Type | Count | Description |
+|------------|-------|-------------|
+| Missing attributes | 3+ | NULL building type or name on mapped polygons |
+| Generic labels | ~60% of polygons | `building=yes` with no specific type classification |
+| Systematic nulls | 3 fields | `building:colour`, `building:material`, `building:use` empty across all 430 polygons |
+| Road attribute gaps | Majority of lines | Lane markings, directional lane data absent across linestring layer |
+| Landuse gaps | Multiple | `landuse` NULL for institutional and mixed-use polygons |
+| Geometry errors | 0 | All 430 polygons and 1693 linestrings passed validity check |
 
-**Tools Used:** QGIS 3.x, Overpass Turbo, QGIS Topology Checker plugin, Excel (QA log)
+**Key Findings:**
+- All 2123 features passed GEOS geometry validity checks -- no topology errors detected
+- Approximately 60% of building polygons carry only a generic `building=yes` tag with no specific use classification, significantly limiting their utility for AI training datasets
+- Three critical attribute fields (`building:colour`, `building:material`, `building:use`) are entirely unpopulated across the full polygon dataset
+- Road network data shows systematic gaps in directional lane attributes, limiting use for autonomous vehicle training applications
+- Named landmarks (CNN Center, Hurt Building, Georgia State University buildings) are well-attributed compared to unnamed structures, creating uneven data quality across the dataset
+
+**Tools Used:** QGIS 4.x, Overpass Turbo, Python (json), GEOS 3.14.1 Geometry Validator
 
 **Files:**
 ```
 project-03-geospatial-data-qa/
-├── data/               # OSM exports and source layers
-├── maps/               # Before/after comparison exports
-└── docs/               # QA log CSV, issue taxonomy, methodology notes
+├── data/               # OSM GeoJSON export for downtown Atlanta
+├── maps/               # QA map exports (PNG and PDF)
+└── docs/               # qa_log.csv with 15 documented findings
 ```
 
 **Map Preview:**
 
-*[Map export will be added upon QGIS project completion]*
+![Downtown Atlanta — OSM Geospatial Data QA Analysis](project-03-geospatial-data-qa/maps/project-03-geospatial-data-qa.png)
 
 ---
 
