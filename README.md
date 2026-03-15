@@ -78,35 +78,42 @@ project-01-critical-infrastructure/
 **Objective:** Transform publicly reported cybersecurity breach data into a geographic heatmap to identify regional vulnerability patterns and support risk-based resource prioritization.
 
 **Data Sources:**
-- [HHS Office for Civil Rights Breach Portal](https://ocrportal.hhs.gov/ocr/breach/breach_report.jsf) — "Wall of Shame" public dataset
-- US Census Bureau state boundary shapefiles
+- [HHS Office for Civil Rights Breach Portal](https://ocrportal.hhs.gov/ocr/breach/breach_report.jsf) — HIPAA breach report, breaches affecting 500+ individuals
+- US Census Bureau TIGER/Line Shapefiles 2025 — state boundaries
 
 **Methodology:**
-1. Downloaded and cleaned HHS breach CSV (filtered for hacking/IT incidents)
-2. Aggregated incident count and individuals affected by state
-3. Joined tabular breach data to state polygon shapefile via state name field
-4. Applied quantile choropleth classification across 5 break points
-5. Created secondary heatmap layer using incident centroid point data
-6. Exported dual-view layout: choropleth overview + regional zoom inset
+1. Downloaded HIPAA breach report CSV from HHS OCR portal (725 total records)
+2. Pre-processed data using Python (pandas) — filtered to hacking/IT incidents (614 records), aggregated by state
+3. Loaded US state boundary shapefile and HHS aggregated CSV into QGIS
+4. Performed attribute join between state shapefile and breach data on state abbreviation field (STUSPS)
+5. Exported joined layer as GeoPackage to make join permanent
+6. Created numeric field using Field Calculator (`to_int()`) to enable graduated symbology
+7. Applied Equal Count (Quantile) choropleth classification across 5 break points using Reds color ramp
+8. Added state boundary layer on top with transparent fill and dark gray stroke for readability
+9. Created print layout with title, legend, scale bar, and north arrow
+10. Exported at 300 DPI in PNG and PDF formats
 
 **Key Findings:**
-- States with higher population density and larger healthcare networks report significantly more incidents
-- Hacking/IT incidents account for the majority of individuals affected, outpacing physical theft/loss
-- Geographic clustering suggests regional factors (healthcare consolidation, attack campaigns) may drive incident patterns
+- California leads with 58 hacking/IT incidents affecting over 15 million individuals
+- Florida and Texas tied at 45 incidents each, reflecting large healthcare network exposure
+- Missouri reported only 18 incidents but over 9.7 million individuals affected, indicating one or more large-scale breaches
+- North Dakota, Vermont, and West Virginia reported zero hacking/IT breaches of 500+ individuals in the dataset
+- US territories (American Samoa, Guam, CNMI, Puerto Rico, US Virgin Islands) also reported no incidents, likely reflecting reporting gaps rather than absence of breaches
+- Eastern US states show consistently higher breach density, aligning with higher population and healthcare infrastructure concentration
 
-**Tools Used:** QGIS 3.x, HHS OCR Public Data, Python (pandas) for pre-processing, US Census shapefiles
+**Tools Used:** QGIS 3.x, Python (pandas), HHS OCR HIPAA Breach Data, US Census TIGER/Line Shapefiles 2025
 
 **Files:**
 ```
 project-02-cybersecurity-incident-heatmap/
-├── data/               # Cleaned HHS breach CSV and state shapefiles
-├── maps/               # Choropleth and heatmap exports
-└── docs/               # Data cleaning notes and classification methodology
+├── data/               # HHS breach CSVs, state shapefiles, GeoPackage with joined data
+├── maps/               # Choropleth map exports (PNG and PDF)
+└── docs/               # Python pre-processing script and methodology notes
 ```
 
 **Map Preview:**
 
-*[Map export will be added upon QGIS project completion]*
+![US Healthcare Data Breaches — Hacking/IT Incidents by State](project-02-cybersecurity-incident-heatmap/maps/Project 02 Cybersecurity Incident Heatmap.png)
 
 ---
 
